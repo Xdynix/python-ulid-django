@@ -14,7 +14,7 @@ This package uses the ULID type implemented by [`python-ulid`][python-ulid].
 Installation:
 
 ```shell
-pip install git+https://github.com/Xdynix/python-ulid-django.git
+pip install python-ulid-django
 ```
 
 You can then add it to your Django model just like other fields.
