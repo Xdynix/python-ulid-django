@@ -38,6 +38,11 @@ repos:
       - id: ruff-format
   - repo: local
     hooks:
+      - id: mypy
+        name: mypy
+        entry: pdm run mypy
+        language: system
+        types: [ python ]
       - id: pdm-lock-check
         name: check PDM lock file
         entry: pdm lock --check

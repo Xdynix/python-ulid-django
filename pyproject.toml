@@ -20,6 +20,7 @@ distribution = true
 [tool.pdm.dev-dependencies]
 lint = [
     "pre-commit>=3.7.1",
+    "mypy~=1.10.0",
 ]
 
 [tool.pdm.scripts.post_install]
@@ -60,3 +61,7 @@ ignore = [
     "E114", # indentation-with-invalid-multiple-comment
     "E117", # over-indented
 ]
+
+[tool.mypy]
+strict = true
+cache_dir = ".cache/mypy"
