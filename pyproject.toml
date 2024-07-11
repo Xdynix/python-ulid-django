@@ -1,0 +1,18 @@
+[project]
+name = "python-ulid-django"
+version = "1.0.0"
+description = "ULID (Universally Unique Lexicographically Sortable Identifier) support for Django."
+authors = [
+    { name = "Xdynix", email = "Lizard.rar@gmail.com" },
+]
+dependencies = []
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true
