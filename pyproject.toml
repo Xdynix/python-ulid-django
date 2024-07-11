@@ -1,6 +1,6 @@
 [project]
 name = "python-ulid-django"
-version = "1.0.0"
+version = "1.0.1"
 description = "ULID (Universally Unique Lexicographically Sortable Identifier) support for Django."
 authors = [
     { name = "Xdynix", email = "Lizard.rar@gmail.com" },
@@ -11,7 +11,29 @@ dependencies = [
 ]
 requires-python = ">=3.10"
 readme = "README.md"
-license = {text = "MIT"}
+license = { text = "MIT" }
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: Django",
+    "Framework :: Django :: 4",
+    "Framework :: Django :: 4.1",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/Xdynix/python-ulid-django"
 
 [build-system]
 requires = ["pdm-backend"]
