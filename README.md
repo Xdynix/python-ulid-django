@@ -6,12 +6,30 @@ Django.
 This package uses the ULID type implemented by [`python-ulid`][python-ulid].
 
 > This package is heavily inspired by [`django-ulid`][django-ulid]. The reason I'm
-> reinventing the wheel is that I want to use `python-ulib`[python-ulid]'s
-> implementation.
+> reinventing the wheel is that I want to use [`python-ulib`][python-ulid]'s
+> ULID implementation.
 
 ## Usage
 
-(TODO)
+Installation:
+
+```shell
+pip install git+https://github.com/Xdynix/python-ulid-django.git
+```
+
+You can then add it to your Django model just like other fields.
+
+Example:
+
+```python
+from django.contrib.auth.models import AbstractUser
+from ulid import ULID
+from ulid_django.models import ULIDField
+
+
+class User(AbstractUser):
+    id = ULIDField(primary_key=True, default=ULID, editable=False)
+```
 
 ## Development
 
