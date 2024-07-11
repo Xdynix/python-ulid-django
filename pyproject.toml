@@ -16,3 +16,17 @@ build-backend = "pdm.backend"
 
 [tool.pdm]
 distribution = true
+
+[tool.pdm.dev-dependencies]
+lint = [
+    "pre-commit>=3.7.1",
+]
+
+[tool.pdm.scripts.post_install]
+cmd = ["pre-commit", "install"]
+help = "install pre-commit hooks"
+
+[tool.pdm.scripts.lint]
+cmd = ["pre-commit", "run", "--all-files"]
+env = { PYTHONUTF8 = "1" }
+help = "execute linters"

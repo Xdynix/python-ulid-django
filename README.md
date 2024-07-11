@@ -19,6 +19,8 @@ Prerequisite: [PDM](https://pdm-project.org/latest/)
 
 Environment setup: `pdm sync`
 
+Run linters: `pdm lint`
+
 [ulid-spec]: https://github.com/ulid/spec
 
 [python-ulid]: https://github.com/mdomke/python-ulid
