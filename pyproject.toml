@@ -30,3 +30,33 @@ help = "install pre-commit hooks"
 cmd = ["pre-commit", "run", "--all-files"]
 env = { PYTHONUTF8 = "1" }
 help = "execute linters"
+
+[tool.ruff]
+cache-dir = ".cache/ruff"
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    "F", # Pyflakes
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "I", # isort
+    "UP", # pyupgrade
+    "S", # flake8-bandit
+    "B", # flake8-bugbear
+    "C", # flake8-comprehensions
+    "DJ", # flake8-django
+    "T20", # flake8-print
+    "SIM", # flake8-simplify
+    "ARG", # flake8-unused-arguments
+    "PTH", # flake8-use-pathlib
+    "FURB", # refurb
+    "RUF", # Ruff-specific rules
+]
+ignore = [
+    # Suppressed by ruff formatter.
+    "W191", # tab-indentation
+    "E111", # indentation-with-invalid-multiple
+    "E114", # indentation-with-invalid-multiple-comment
+    "E117", # over-indented
+]

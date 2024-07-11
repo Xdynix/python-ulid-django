@@ -30,6 +30,12 @@ repos:
     rev: v0.41.0
     hooks:
       - id: markdownlint
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.0
+    hooks:
+      - id: ruff
+        args: [ --fix ]
+      - id: ruff-format
   - repo: local
     hooks:
       - id: pdm-lock-check
