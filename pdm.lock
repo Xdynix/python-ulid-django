@@ -5,7 +5,21 @@
 groups = ["default", "lint"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:67c5f225658c539291838b5fe032838fec3bf4034b39fafacc0d647bd429eb88"
+content_hash = "sha256:f9b052818f21df19bfc9772c504a9de2a6a379960c84d3de48e22c2479562c70"
+
+[[package]]
+name = "asgiref"
+version = "3.8.1"
+requires_python = ">=3.8"
+summary = "ASGI specs, helper code, and adapters"
+groups = ["default", "lint"]
+dependencies = [
+    "typing-extensions>=4; python_version < \"3.11\"",
+]
+files = [
+    {file = "asgiref-3.8.1-py3-none-any.whl", hash = "sha256:3e1e3ecc849832fe52ccf2cb6686b7a55f82bb1d6aee72a58826471390335e47"},
+    {file = "asgiref-3.8.1.tar.gz", hash = "sha256:c343bd80a0bec947a9860adb4c432ffa7db769836c64238fc34bdc3fec84d590"},
+]
 
 [[package]]
 name = "cfgv"
@@ -26,6 +40,72 @@ groups = ["lint"]
 files = [
     {file = "distlib-0.3.8-py2.py3-none-any.whl", hash = "sha256:034db59a0b96f8ca18035f36290806a9a6e6bd9d1ff91e45a7f172eb17e51784"},
     {file = "distlib-0.3.8.tar.gz", hash = "sha256:1530ea13e350031b6312d8580ddb6b27a104275a31106523b8f123787f494f64"},
+]
+
+[[package]]
+name = "django"
+version = "5.0.7"
+requires_python = ">=3.10"
+summary = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
+groups = ["default", "lint"]
+dependencies = [
+    "asgiref<4,>=3.7.0",
+    "sqlparse>=0.3.1",
+    "tzdata; sys_platform == \"win32\"",
+]
+files = [
+    {file = "Django-5.0.7-py3-none-any.whl", hash = "sha256:f216510ace3de5de01329463a315a629f33480e893a9024fc93d8c32c22913da"},
+    {file = "Django-5.0.7.tar.gz", hash = "sha256:bd4505cae0b9bd642313e8fb71810893df5dc2ffcacaa67a33af2d5cd61888f2"},
+]
+
+[[package]]
+name = "django-stubs"
+version = "5.0.2"
+requires_python = ">=3.8"
+summary = "Mypy stubs for Django"
+groups = ["lint"]
+dependencies = [
+    "asgiref",
+    "django",
+    "django-stubs-ext>=5.0.2",
+    "tomli; python_version < \"3.11\"",
+    "types-PyYAML",
+    "typing-extensions>=4.11.0",
+]
+files = [
+    {file = "django_stubs-5.0.2-py3-none-any.whl", hash = "sha256:cb0c506cb5c54c64612e4a2ee8d6b913c6178560ec168009fe847c09747c304b"},
+    {file = "django_stubs-5.0.2.tar.gz", hash = "sha256:236bc5606e5607cb968f92b648471f9edaa461a774bc013bf9e6bff8730f6bdf"},
+]
+
+[[package]]
+name = "django-stubs-ext"
+version = "5.0.2"
+requires_python = ">=3.8"
+summary = "Monkey-patching and extensions for django-stubs"
+groups = ["lint"]
+dependencies = [
+    "django",
+    "typing-extensions",
+]
+files = [
+    {file = "django_stubs_ext-5.0.2-py3-none-any.whl", hash = "sha256:8d8efec5a86241266bec94a528fe21258ad90d78c67307f3ae5f36e81de97f12"},
+    {file = "django_stubs_ext-5.0.2.tar.gz", hash = "sha256:409c62585d7f996cef5c760e6e27ea3ff29f961c943747e67519c837422cad32"},
+]
+
+[[package]]
+name = "django-stubs"
+version = "5.0.2"
+extras = ["compatible-mypy"]
+requires_python = ">=3.8"
+summary = "Mypy stubs for Django"
+groups = ["lint"]
+dependencies = [
+    "django-stubs==5.0.2",
+    "mypy~=1.10.0",
+]
+files = [
+    {file = "django_stubs-5.0.2-py3-none-any.whl", hash = "sha256:cb0c506cb5c54c64612e4a2ee8d6b913c6178560ec168009fe847c09747c304b"},
+    {file = "django_stubs-5.0.2.tar.gz", hash = "sha256:236bc5606e5607cb968f92b648471f9edaa461a774bc013bf9e6bff8730f6bdf"},
 ]
 
 [[package]]
@@ -133,6 +213,17 @@ files = [
 ]
 
 [[package]]
+name = "python-ulid"
+version = "2.7.0"
+requires_python = ">=3.9"
+summary = "Universally unique lexicographically sortable identifier"
+groups = ["default"]
+files = [
+    {file = "python_ulid-2.7.0-py3-none-any.whl", hash = "sha256:c81658e382f69bad8c6d365155c4ae21843ae4226b94f72c12d7adcbb545a251"},
+    {file = "python_ulid-2.7.0.tar.gz", hash = "sha256:18eb595885140851a490a95b0da4447911ff69fa9f434732067b97f6956f9fe9"},
+]
+
+[[package]]
 name = "pyyaml"
 version = "6.0.1"
 requires_python = ">=3.6"
@@ -166,6 +257,17 @@ files = [
 ]
 
 [[package]]
+name = "sqlparse"
+version = "0.5.0"
+requires_python = ">=3.8"
+summary = "A non-validating SQL parser."
+groups = ["default", "lint"]
+files = [
+    {file = "sqlparse-0.5.0-py3-none-any.whl", hash = "sha256:c204494cd97479d0e39f28c93d46c0b2d5959c7b9ab904762ea6c7af211c8663"},
+    {file = "sqlparse-0.5.0.tar.gz", hash = "sha256:714d0a4932c059d16189f58ef5411ec2287a4360f17cdd0edd2d09d4c5087c93"},
+]
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 requires_python = ">=3.7"
@@ -178,14 +280,37 @@ files = [
 ]
 
 [[package]]
+name = "types-pyyaml"
+version = "6.0.12.20240311"
+requires_python = ">=3.8"
+summary = "Typing stubs for PyYAML"
+groups = ["lint"]
+files = [
+    {file = "types-PyYAML-6.0.12.20240311.tar.gz", hash = "sha256:a9e0f0f88dc835739b0c1ca51ee90d04ca2a897a71af79de9aec5f38cb0a5342"},
+    {file = "types_PyYAML-6.0.12.20240311-py3-none-any.whl", hash = "sha256:b845b06a1c7e54b8e5b4c683043de0d9caf205e7434b3edc678ff2411979b8f6"},
+]
+
+[[package]]
 name = "typing-extensions"
 version = "4.12.2"
 requires_python = ">=3.8"
 summary = "Backported and Experimental Type Hints for Python 3.8+"
-groups = ["lint"]
+groups = ["default", "lint"]
 files = [
     {file = "typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"},
     {file = "typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"},
+]
+
+[[package]]
+name = "tzdata"
+version = "2024.1"
+requires_python = ">=2"
+summary = "Provider of IANA time zone data"
+groups = ["default", "lint"]
+marker = "sys_platform == \"win32\""
+files = [
+    {file = "tzdata-2024.1-py2.py3-none-any.whl", hash = "sha256:9068bc196136463f5245e51efda838afa15aaeca9903f49050dfa2679db4d252"},
+    {file = "tzdata-2024.1.tar.gz", hash = "sha256:2674120f8d891909751c38abcdfd386ac0a5a1127954fbc332af6b5ceae07efd"},
 ]
 
 [[package]]

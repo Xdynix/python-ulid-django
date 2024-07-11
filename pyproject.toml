@@ -5,7 +5,10 @@ description = "ULID (Universally Unique Lexicographically Sortable Identifier) s
 authors = [
     { name = "Xdynix", email = "Lizard.rar@gmail.com" },
 ]
-dependencies = []
+dependencies = [
+    "django>=4.2.0",
+    "python-ulid<3.0.0,>=2.6.0",
+]
 requires-python = ">=3.10"
 readme = "README.md"
 license = {text = "MIT"}
@@ -21,6 +24,7 @@ distribution = true
 lint = [
     "pre-commit>=3.7.1",
     "mypy~=1.10.0",
+    "django-stubs[compatible-mypy]~=5.0.0",
 ]
 
 [tool.pdm.scripts.post_install]
