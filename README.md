@@ -11,13 +11,15 @@ This package uses the ULID type implemented by [`python-ulid`][python-ulid].
 
 ## Usage
 
-Installation:
+### Installation
 
 ```shell
 pip install python-ulid-django
 ```
 
-You can then add it to your Django model just like other fields.
+### Model Field
+
+You can then add `ULIDField` to your Django model just like other fields.
 
 Example:
 
@@ -29,6 +31,29 @@ from ulid_django.models import ULIDField
 
 class User(AbstractUser):
     id = ULIDField(primary_key=True, default=ULID, editable=False)
+```
+
+### URL Converter
+
+There is also a URL converter can be used.
+
+```python
+from django.urls import path, register_converter
+from ulid import ULID
+from ulid_django.converters import ULIDConverter
+
+
+def user_detail_view(request, user_id):
+    assert isinstance(user_id, ULID)
+    ...
+
+
+register_converter(ULIDConverter, "ulid")
+
+urlpatterns = [
+    path("user/<ulid:user_id>/", user_detail_view),
+    ...,
+]
 ```
 
 ## Development
