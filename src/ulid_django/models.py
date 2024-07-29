@@ -20,6 +20,10 @@ class ULIDField(models.UUIDField):  # type: ignore[type-arg]
     - https://github.com/mdomke/python-ulid
     """
 
+    _pyi_private_set_type: str | ULID  # type: ignore[assignment]
+    _pyi_private_get_type: ULID  # type: ignore[assignment]
+    _pyi_lookup_exact_type: ULID | str  # type: ignore[assignment]
+
     description = _("Universally unique lexicographically sortable identifier")
 
     @override

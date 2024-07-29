@@ -1,6 +1,6 @@
 [project]
 name = "python-ulid-django"
-version = "1.1.0"
+version = "1.1.1"
 description = "ULID (Universally Unique Lexicographically Sortable Identifier) support for Django."
 authors = [
     { name = "Xdynix", email = "Lizard.rar@gmail.com" },
