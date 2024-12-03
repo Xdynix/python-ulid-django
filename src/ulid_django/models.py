@@ -70,7 +70,7 @@ class ULIDField(models.UUIDField):  # type: ignore[type-arg]
         form_class: type[Field] | None = None,
         choices_form_class: type[ChoiceField] | None = None,
         **kwargs: Any,
-    ) -> Field:
+    ) -> Field | None:
         return super().formfield(
             form_class=form_class or ULIDFormField,
             choices_form_class=choices_form_class,
