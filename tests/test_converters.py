@@ -1,5 +1,6 @@
 import pytest
 from ulid import ULID
+
 from ulid_django.converters import ULIDConverter
 
 ulid = ULID()

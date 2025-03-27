@@ -3,6 +3,7 @@ from typing import Any
 import pytest
 from django.core.exceptions import ValidationError
 from ulid import ULID
+
 from ulid_django.forms import ULIDField
 
 ulid = ULID()
