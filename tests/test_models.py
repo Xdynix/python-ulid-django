@@ -7,6 +7,7 @@ from django.db.models import UUIDField
 from pytest_mock import MockerFixture
 from ulid import ULID
 
+from example.models import Item
 from ulid_django.forms import ULIDField as ULIDFormField
 from ulid_django.models import ULIDField
 
@@ -15,6 +16,15 @@ ulid_int = int(ulid)
 ulid_str = str(ulid)
 ulid_hex = ulid.hex
 ulid_uuid = ulid.to_uuid()
+
+invalid_values = [
+    "foobar",
+    "Z" * 32,
+    "0" * 30,
+    "?" * 26,
+    [],
+    (),
+]
 
 
 class TestULIDField:
@@ -43,17 +53,7 @@ class TestULIDField:
     ) -> None:
         assert ulid_field.to_python(value) == expected
 
-    @pytest.mark.parametrize(
-        "value",
-        [
-            "foobar",
-            "Z" * 32,
-            "0" * 30,
-            "?" * 26,
-            [],
-            (),
-        ],
-    )
+    @pytest.mark.parametrize("value", invalid_values)
     def test_to_python_invalid(self, ulid_field: ULIDField, value: Any) -> None:
         with pytest.raises(ValidationError) as exc_info:
             ulid_field.to_python(value)
@@ -115,3 +115,39 @@ class TestULIDField:
 
     def test_formfield(self, ulid_field: ULIDField) -> None:
         assert isinstance(ulid_field.formfield(), ULIDFormField)
+
+
+@pytest.mark.django_db
+class TestIntegration:
+    @pytest.fixture
+    def item(self) -> Item:
+        return Item.objects.create(name="item", etag=ulid)
+
+    @pytest.mark.parametrize("value", [ulid, ulid_int, ulid_str, ulid_hex, ulid_uuid])
+    def test_query(self, item: Item, value: ULID | UUID | str | int) -> None:
+        assert Item.objects.filter(etag=value).first() == item
+
+    @pytest.mark.parametrize("value", invalid_values)
+    def test_query_invalid(self, value: Any) -> None:
+        with pytest.raises(ValidationError):
+            Item.objects.filter(etag=value).get()
+
+    @pytest.mark.parametrize("value", [ulid, ulid_int, ulid_str, ulid_hex, ulid_uuid])
+    def test_get_set(self, item: Item, value: ULID | UUID | str | int) -> None:
+        Item.objects.filter(pk=item.pk).update(etag=None)
+
+        item.refresh_from_db()
+        assert item.etag is None
+
+        item.etag = value
+        item.save()
+
+        item.refresh_from_db()
+        assert item.etag == ulid
+        assert isinstance(item.etag, ULID)
+
+    @pytest.mark.parametrize("value", invalid_values)
+    def test_set_invalid(self, item: Item, value: Any) -> None:
+        with pytest.raises(ValidationError):
+            item.etag = value
+            item.save()

@@ -47,6 +47,7 @@ lint = [
     "pre-commit>=4.2.0",
 ]
 test = [
+    "beautifulsoup4[lxml]>=4.13.3",
     "pytest-cov>=6.0.0",
     "pytest-django>=4.10.0",
     "pytest-mock>=3.14.0",
@@ -72,6 +73,7 @@ help = "execute test cases"
 [tool.ruff]
 cache-dir = ".cache/ruff"
 target-version = "py310"
+src = ["src", "testsite"]
 
 [tool.ruff.lint]
 select = [
@@ -104,15 +106,25 @@ ignore = [
 "test_*.py" = [
     "S101", # assert
 ]
+"**/migrations/*.py" = [
+    "RUF012", # mutable-class-default
+]
 
 [tool.mypy]
 strict = true
 cache_dir = ".cache/mypy"
+mypy_path = "testsite"
+plugins = [
+    "mypy_django_plugin.main",
+]
+
+[tool.django-stubs]
+django_settings_module = "testsite.settings"
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "tests.settings"
+DJANGO_SETTINGS_MODULE = "testsite.settings"
 testpaths = "tests"
-pythonpath = [".", "src"]
+pythonpath = [".", "src", "testsite"]
 cache_dir = ".cache/pytest"
 addopts = [
     "--import-mode", "importlib",
