@@ -1,5 +1,10 @@
-from typing import Any, cast, override
+from typing import Any, cast
 from uuid import UUID
+
+try:
+    from typing import override
+except ImportError:  # pragma: no cover
+    from typing_extensions import override
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -32,10 +37,10 @@ class ULIDField(models.UUIDField):  # type: ignore[type-arg]
             return value
         try:
             if isinstance(value, str) and len(value) == 26:
-                return cast(ULID, ULID.from_str(value))
+                return ULID.from_str(value)
             else:
                 value = super().to_python(value)
-                return cast(ULID, ULID.from_uuid(value))
+                return ULID.from_uuid(value)
         except (ValueError, ValidationError) as err:
             raise ValidationError(
                 _("%(value)r is not a valid ULID."),

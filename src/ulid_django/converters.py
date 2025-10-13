@@ -1,13 +1,13 @@
-from typing import cast
-
 from ulid import ULID
 
 
 class ULIDConverter:
     regex = "[A-Z0-9]{26}"
 
-    def to_python(self, value: str) -> ULID:
-        return cast(ULID, ULID.from_str(value))
+    @classmethod
+    def to_python(cls, value: str) -> ULID:
+        return ULID.from_str(value)
 
-    def to_url(self, value: ULID) -> str:
+    @classmethod
+    def to_url(cls, value: ULID) -> str:
         return str(value)
