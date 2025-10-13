@@ -1,4 +1,5 @@
 from typing import Any, cast
+from uuid import UUID
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -25,6 +26,8 @@ class ULIDField(forms.CharField):
                 value = ULID.from_str(value)
             elif len(value) == 32:
                 value = ULID.from_hex(value)
+            elif len(value) == 36:
+                value = ULID.from_uuid(UUID(value))
             else:
                 raise ValueError
         except ValueError as err:

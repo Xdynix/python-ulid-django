@@ -14,6 +14,7 @@ from ulid_django.forms import ULIDField
 ulid = ULID()
 ulid_str = str(ulid)
 ulid_hex = ulid.hex
+ulid_uuid = str(ulid.to_uuid())
 
 invalid_values = [
     "Z" * 32,
@@ -51,6 +52,7 @@ class TestULIDField:
             (ulid, ulid),
             (ulid_str, ulid),
             (ulid_hex, ulid),
+            (ulid_uuid, ulid),
         ],
     )
     def test_to_python(
