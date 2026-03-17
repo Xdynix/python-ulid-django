@@ -1,10 +1,5 @@
-from typing import Any, cast
+from typing import Any, cast, override
 from uuid import UUID
-
-try:
-    from typing import override
-except ImportError:  # pragma: no cover
-    from typing_extensions import override
 
 from django.core.exceptions import ValidationError
 from django.db import models
