@@ -5,7 +5,7 @@
 groups = ["default", "lint", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:5f1b9bfd1d9b741d3a4bebccaef01a415af25fbcd94caab4538d716530cb9551"
+content_hash = "sha256:edca830124b3b78ddd57ec2918f0d4e88680e3cad7f9174ae47e8ce6193866e5"
 
 [[metadata.targets]]
 requires_python = ">=3.12"
@@ -656,13 +656,16 @@ files = [
 
 [[package]]
 name = "python-ulid"
-version = "3.1.0"
-requires_python = ">=3.9"
+version = "4.0.1"
+requires_python = ">=3.10"
 summary = "Universally unique lexicographically sortable identifier"
 groups = ["default"]
+dependencies = [
+    "typing-extensions; python_version < \"3.11\"",
+]
 files = [
-    {file = "python_ulid-3.1.0-py3-none-any.whl", hash = "sha256:e2cdc979c8c877029b4b7a38a6fba3bc4578e4f109a308419ff4d3ccf0a46619"},
-    {file = "python_ulid-3.1.0.tar.gz", hash = "sha256:ff0410a598bc5f6b01b602851a3296ede6f91389f913a5d5f8c496003836f636"},
+    {file = "python_ulid-4.0.1-py3-none-any.whl", hash = "sha256:6f1d69ceb97e99fe542df8476ebcd7a668284bf53ee14b3106bcc6a341a95ed9"},
+    {file = "python_ulid-4.0.1.tar.gz", hash = "sha256:bbeec02556190bb9dc3401faa7268696acbfbe7b6db9908c155dc3548629f20c"},
 ]
 
 [[package]]
