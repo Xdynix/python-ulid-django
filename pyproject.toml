@@ -38,8 +38,8 @@ build-backend = "pdm.backend"
 
 [dependency-groups]
 lint = [
-    "django-stubs[compatible-mypy]~=5.2.7",
-    "mypy>=1.13.0,<1.19.0",
+    "django-stubs[compatible-mypy]~=6.0.7",
+    "mypy>=1.13.0,<2.4.0",
     "pre-commit>=4.2.0",
 ]
 test = [
