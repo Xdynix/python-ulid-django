@@ -6,7 +6,7 @@ authors = [
     { name = "Xdynix", email = "Lizard.rar@gmail.com" },
 ]
 dependencies = [
-    "django>=5.2.0",
+    "django<7.0.0,>=5.2.0",
     "python-ulid<5.0.0,>=3.0.0",
 ]
 requires-python = ">=3.12"
