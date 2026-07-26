@@ -23,6 +23,7 @@ repos:
           - '4'
       - id: check-toml
       - id: check-yaml
+      - id: end-of-file-fixer
       - id: fix-byte-order-marker
       - id: mixed-line-ending
       - id: trailing-whitespace
@@ -30,22 +31,34 @@ repos:
     rev: v0.49.1
     hooks:
       - id: markdownlint
+        args:
+          - --config
+          - pyproject.toml
+          - --configPointer
+          - /tool/markdownlint
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.16.0
     hooks:
       - id: ruff-check
         args: [ --fix ]
       - id: ruff-format
+        types_or: [ python, pyi, jupyter, markdown ]
   - repo: local
     hooks:
-      - id: mypy
-        name: mypy
-        entry: pdm run mypy
-        language: system
-        types: [ python ]
-      - id: pdm-lock-check
-        name: check PDM lock file
-        entry: pdm lock --check
+      - id: uv-lock-check
+        name: check UV lock file
+        entry: uv lock --check
         language: system
         pass_filenames: false
-        files: ^pyproject.toml$
+        files: ^(pyproject\.toml|uv\.lock)$
+      - id: mypy
+        name: mypy
+        entry: uv run mypy .
+        language: system
+        types: [ python ]
+        pass_filenames: false
+      - id: django-migration
+        name: check Django migrations
+        entry: uv run testsite/manage.py makemigrations --check --dry-run
+        language: system
+        pass_filenames: false

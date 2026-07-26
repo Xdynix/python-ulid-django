@@ -11,14 +11,14 @@ dependencies = [
 ]
 requires-python = ">=3.12"
 readme = "README.md"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Framework :: Django",
     "Framework :: Django :: 5",
     "Framework :: Django :: 6",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
@@ -33,42 +33,37 @@ classifiers = [
 Homepage = "https://github.com/Xdynix/python-ulid-django"
 
 [build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
+requires = ["uv_build>=0.11.32,<0.12"]
+build-backend = "uv_build"
 
 [dependency-groups]
+dev = [
+    "rust-just>=1.42.3",
+]
 lint = [
     "django-stubs[compatible-mypy]~=6.0.7",
     "mypy>=1.13.0,<2.4.0",
     "pre-commit>=4.2.0",
+    "ruff>=0.16.0",
 ]
 test = [
     "beautifulsoup4[lxml]>=4.13.3",
     "pytest-cov>=6.0.0",
     "pytest-django>=4.10.0",
     "pytest-mock>=3.14.0",
-    "pytest>=8.3.5",
+    "pytest-randomly>=3.16.0",
+    "pytest>=9.0.0",
 ]
 
-[tool.pdm]
-distribution = true
+[tool.uv]
+default-groups = "all"
 
-[tool.pdm.scripts.post_install]
-cmd = ["pre-commit", "install"]
-help = "install pre-commit hooks"
-
-[tool.pdm.scripts.lint]
-cmd = ["pre-commit", "run", "--all-files"]
-env = { PYTHONUTF8 = "1" }
-help = "execute linters"
-
-[tool.pdm.scripts.test]
-cmd = ["pytest", "--cov", "ulid_django"]
-help = "execute test cases"
+[tool.uv.build-backend]
+# The distribution name normalizes to `python_ulid_django`, not the module name.
+module-name = "ulid_django"
 
 [tool.ruff]
 cache-dir = ".cache/ruff"
-target-version = "py312"
 src = ["src", "testsite"]
 
 [tool.ruff.lint]
@@ -110,6 +105,8 @@ ignore = [
 strict = true
 cache_dir = ".cache/mypy"
 mypy_path = "testsite"
+num_workers = 8
+python_version = "3.12"
 plugins = [
     "mypy_django_plugin.main",
 ]
@@ -117,15 +114,16 @@ plugins = [
 [tool.django-stubs]
 django_settings_module = "testsite.settings"
 
-[tool.pytest.ini_options]
+[tool.pytest]
+strict = true
 DJANGO_SETTINGS_MODULE = "testsite.settings"
-testpaths = "tests"
+testpaths = ["tests"]
 pythonpath = [".", "src", "testsite"]
 cache_dir = ".cache/pytest"
 addopts = [
     "--import-mode", "importlib",
     "--cov-config", "pyproject.toml",
-    "--cov-report", "term",
+    "--cov-report", "term:skip-covered",
     "--cov-report", "html",
     "--cov-fail-under", "100",
 ]
@@ -139,7 +137,13 @@ disable_warnings = ["no-data-collected"]
 exclude_also = [
     "if TYPE_CHECKING:",
     "class .*\\bProtocol\\):",
+    "@overload",
 ]
 
 [tool.coverage.html]
 directory = ".cache/cov-report"
+
+[tool.markdownlint]
+default = true
+MD007 = { indent = 4 }
+MD013 = { line_length = 88, strict = true }

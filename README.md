@@ -58,13 +58,15 @@ urlpatterns = [
 
 ## Development
 
-Prerequisite: [PDM](https://pdm-project.org/latest/)
+Prerequisite: [uv](https://docs.astral.sh/uv/) and [just](https://just.systems/)
 
-Environment setup: `pdm sync`
+Environment setup: `just dev-setup`
 
-Run linters: `pdm lint`
+Run linters: `just lint`
 
-Test: `pdm test`
+Test: `just test`
+
+Test against every supported Python version: `just test-all`
 
 [ulid-spec]: https://github.com/ulid/spec
 
