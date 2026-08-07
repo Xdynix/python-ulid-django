@@ -43,3 +43,11 @@ test-all *args: (test-py "3.12" args) (test-py "3.13" args) (test-py "3.14" args
 # build the source distribution and wheel
 build:
     uv build --clear
+
+# The PyPI token lives in Windows Credential Manager; WSL has no Secret Service
+# backend. uv only consults the keyring when an explicit username is supplied.
+# build and publish the distribution to PyPI
+[confirm("Publish to PyPI? This cannot be undone. [y/N]")]
+[windows]
+publish: build
+    uv publish --username __token__ --keyring-provider subprocess
