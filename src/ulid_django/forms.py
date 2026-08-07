@@ -1,4 +1,4 @@
-from typing import Any, cast
+from typing import Any, ClassVar, cast, override
 from uuid import UUID
 
 from django import forms
@@ -8,15 +8,17 @@ from ulid import ULID
 
 
 class ULIDField(forms.CharField):
-    default_error_messages = {  # noqa: RUF012
+    default_error_messages: ClassVar[dict[str, Any]] = {
         "invalid": _("Enter a valid ULID."),
     }
 
+    @override
     def prepare_value(self, value: Any) -> Any:
         if isinstance(value, ULID):
             return str(value)
         return value
 
+    @override
     def to_python(self, value: Any) -> ULID | None:  # type: ignore[override]
         value = super().to_python(value)
         if value in self.empty_values:
