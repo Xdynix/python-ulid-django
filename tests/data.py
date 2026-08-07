@@ -1,0 +1,7 @@
+from ulid import ULID
+
+ULID_VALUE = ULID()
+ULID_INT = int(ULID_VALUE)
+ULID_STR = str(ULID_VALUE)
+ULID_HEX = ULID_VALUE.hex
+ULID_UUID = ULID_VALUE.to_uuid()

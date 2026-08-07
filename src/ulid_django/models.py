@@ -1,4 +1,4 @@
-from typing import Any, cast, override
+from typing import TYPE_CHECKING, Any, TypeVar, cast, override
 from uuid import UUID
 
 from django.core.exceptions import ValidationError
@@ -10,8 +10,22 @@ from ulid import ULID
 
 from ulid_django.forms import ULIDField as ULIDFormField
 
+_ST = TypeVar("_ST", contravariant=True)
+_GT = TypeVar("_GT", covariant=True)
 
-class ULIDField(models.UUIDField):  # type: ignore[type-arg]
+if TYPE_CHECKING:
+    _ULIDFieldBase = models.UUIDField[_ST, _GT]
+else:
+    # Django fields are not subscriptable without django_stubs_ext.monkeypatch().
+    class _ULIDFieldBase(models.UUIDField):
+        def __class_getitem__(cls, _item: Any) -> type:
+            return cls
+
+
+# Subscripting the base is what binds the parameters to Field.__get__: via
+# Generic the descriptor still yields Any. Giving them defaults would pin
+# null=True fields to a non-optional ULID; the plugin derives both per call site.
+class ULIDField(_ULIDFieldBase[_ST, _GT]):
     """Django model field for ULID type.
 
     Check below for more details:
@@ -43,7 +57,12 @@ class ULIDField(models.UUIDField):  # type: ignore[type-arg]
                 params={"value": value},
             ) from err
 
-    def from_db_value(self, value: Any, *_: Any, **__: Any) -> ULID | None:
+    def from_db_value(
+        self,
+        value: Any,
+        _expression: Any,
+        _connection: BaseDatabaseWrapper,
+    ) -> ULID | None:
         return self.to_python(value)
 
     @override
