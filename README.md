@@ -6,8 +6,12 @@ Django.
 This package uses the ULID type implemented by [`python-ulid`][python-ulid].
 
 > This package is heavily inspired by [`django-ulid`][django-ulid]. The reason I'm
-> reinventing the wheel is that I want to use [`python-ulib`][python-ulid]'s
+> reinventing the wheel is that I want to use [`python-ulid`][python-ulid]'s
 > ULID implementation.
+
+## Requirements
+
+Python 3.12+ and Django 5.2+.
 
 ## Usage
 
@@ -33,9 +37,26 @@ class User(AbstractUser):
     id = ULIDField(primary_key=True, default=ULID, editable=False)
 ```
 
+### Form Field
+
+`ULIDField` supplies a matching form field automatically, so a `ModelForm` needs
+no extra wiring. Use it directly when building a plain form:
+
+```python
+from django import forms
+from ulid_django.forms import ULIDField
+
+
+class LookupForm(forms.Form):
+    item_id = ULIDField()
+```
+
+It cleans to a `ULID` and accepts three input widths: the 26-character canonical
+representation, a 32-character hex string, and a 36-character UUID string.
+
 ### URL Converter
 
-There is also a URL converter can be used.
+A URL converter is also provided.
 
 ```python
 from django.urls import path, register_converter
