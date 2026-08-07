@@ -1,9 +1,11 @@
-set dotenv-load := true
-set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
+set dotenv-load
+
+[windows]
+set shell := ["powershell.exe", "-NoLogo", "-Command"]
 
 export PYTHONUTF8 := "1"
 
-default: lint
+default: ruff
 
 # set up development environment
 dev-setup:
@@ -19,6 +21,10 @@ ruff:
 lint:
     uv run pre-commit run --all-files
 
+# audit locked dependencies for known vulnerabilities
+audit:
+    uv audit --frozen
+
 # execute test cases
 test *args:
     uv run pytest --cov ulid_django {{ args }}
@@ -27,8 +33,12 @@ test *args:
 test-py version *args:
     uv run --python {{ version }} pytest --cov ulid_django {{ args }}
 
-# execute test cases against every supported Python version
-test-all *args: (test-py "3.12" args) (test-py "3.13" args) (test-py "3.14" args)
+# execute test cases against a specific Django feature release
+test-django version *args:
+    uv run --frozen --with 'django=={{ version }}.*' pytest --cov ulid_django {{ args }}
+
+# execute test cases against every supported Python and Django version
+test-all *args: (test-py "3.12" args) (test-py "3.13" args) (test-py "3.14" args) (test-django "5.2" args) (test-django "6.0" args)
 
 # build the source distribution and wheel
 build:
