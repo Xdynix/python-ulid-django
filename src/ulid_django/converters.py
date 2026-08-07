@@ -2,12 +2,12 @@ from ulid import ULID
 
 
 class ULIDConverter:
-    regex = "[A-Z0-9]{26}"
+    # Crockford base32 omits I, L, O and U. 26 characters carry 130 bits, so the
+    # leading one has only 3 significant bits and cannot exceed 7.
+    regex = "[0-7][0-9ABCDEFGHJKMNPQRSTVWXYZ]{25}"
 
-    @classmethod
-    def to_python(cls, value: str) -> ULID:
+    def to_python(self, value: str) -> ULID:
         return ULID.from_str(value)
 
-    @classmethod
-    def to_url(cls, value: ULID) -> str:
+    def to_url(self, value: ULID | str) -> str:
         return str(value)
