@@ -13,14 +13,7 @@ repos:
     rev: v6.0.0
     hooks:
       - id: check-added-large-files
-      - id: check-ast
       - id: check-docstring-first
-      - id: pretty-format-json
-        args:
-          - --autofix
-          - --no-sort-keys
-          - --indent
-          - '4'
       - id: check-toml
       - id: check-yaml
       - id: end-of-file-fixer
@@ -37,7 +30,7 @@ repos:
           - --configPointer
           - /tool/markdownlint
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.0
+    rev: v0.16.1
     hooks:
       - id: ruff-check
         args: [ --fix ]
