@@ -39,7 +39,8 @@ Repository = "https://github.com/Xdynix/python-ulid-django"
 Issues = "https://github.com/Xdynix/python-ulid-django/issues"
 
 [build-system]
-requires = ["uv_build>=0.12.2,<0.13"]
+# Floor is also the required-version floor under [tool.uv]; raise both together.
+requires = ["uv_build>=0.13.5,<0.14"]
 build-backend = "uv_build"
 
 [dependency-groups]
@@ -63,6 +64,8 @@ test = [
 ]
 
 [tool.uv]
+# Floor matches the uv_build floor under [build-system]; raise both together.
+required-version = ">=0.13.5"
 default-groups = "all"
 preview-features = ["audit-command"]
 
