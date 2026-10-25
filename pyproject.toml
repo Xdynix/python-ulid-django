@@ -142,10 +142,9 @@ django_settings_module = "testsite.settings"
 
 [tool.pytest]
 strict = true
-DJANGO_SETTINGS_MODULE = "testsite.settings"
+cache_dir = ".cache/pytest"
 testpaths = ["tests", "src"]
 pythonpath = [".", "src", "testsite"]
-cache_dir = ".cache/pytest"
 addopts = [
     "--doctest-modules",
     "--import-mode", "importlib",
@@ -154,6 +153,13 @@ addopts = [
     "--cov-report", "html",
     "--cov-fail-under", "100",
 ]
+# Quoted because pytest declares this option as a string.
+max_warnings = "0"
+filterwarnings = [
+    # Python hides ResourceWarning by default; show it so unclosed files fail the run.
+    "default::ResourceWarning",
+]
+DJANGO_SETTINGS_MODULE = "testsite.settings"
 
 [tool.coverage.run]
 branch = true
