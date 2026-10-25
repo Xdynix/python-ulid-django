@@ -1,9 +1,10 @@
 default_install_hook_types:
   - pre-commit
   - commit-msg
+default_stages: [ pre-commit ]
 repos:
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-    rev: v9.26.0
+    rev: v9.27.0
     hooks:
       - id: commitlint
         stages: [ commit-msg ]
@@ -13,9 +14,15 @@ repos:
     rev: v6.0.0
     hooks:
       - id: check-added-large-files
+      - id: check-case-conflict
       - id: check-docstring-first
+      - id: check-executables-have-shebangs
+      - id: check-illegal-windows-names
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
       - id: check-toml
       - id: check-yaml
+      - id: detect-private-key
       - id: end-of-file-fixer
       - id: fix-byte-order-marker
       - id: mixed-line-ending
@@ -29,29 +36,35 @@ repos:
           - pyproject.toml
           - --configPointer
           - /tool/markdownlint
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.1
-    hooks:
-      - id: ruff-check
-        args: [ --fix ]
-      - id: ruff-format
-        types_or: [ python, pyi, jupyter, markdown ]
   - repo: local
     hooks:
+      # Run through uv so the lock file is the only place ruff's version is set.
+      - id: ruff-check
+        name: ruff check
+        entry: uv run ruff check --force-exclude --fix
+        language: unsupported
+        types_or: [ python, pyi, jupyter ]
+      - id: ruff-format
+        name: ruff format
+        entry: uv run ruff format --force-exclude
+        language: unsupported
+        types_or: [ python, pyi, jupyter, markdown ]
       - id: uv-lock-check
         name: check UV lock file
         entry: uv lock --check
-        language: system
+        language: unsupported
         pass_filenames: false
         files: ^(pyproject\.toml|uv\.lock)$
       - id: mypy
         name: mypy
         entry: uv run mypy .
-        language: system
-        types: [ python ]
+        language: unsupported
+        # A types/types_or filter cannot reach uv.lock, which identify tags as
+        # toml; mypy resolves against the locked packages, so bumps must retrigger.
+        files: ^(.*\.pyi?|pyproject\.toml|uv\.lock)$
         pass_filenames: false
       - id: django-migration
         name: check Django migrations
         entry: uv run testsite/manage.py makemigrations --check --dry-run
-        language: system
+        language: unsupported
         pass_filenames: false
