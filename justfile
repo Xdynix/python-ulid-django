@@ -1,3 +1,5 @@
+# [windows] on a `set` item is what requires 1.56.0.
+set minimum-version := '1.56.0'
 set dotenv-load
 
 [windows]
@@ -25,19 +27,19 @@ lint:
 audit:
     uv audit --frozen
 
-# execute test cases
+# execute tests
 test *args:
     uv run pytest --cov ulid_django {{ args }}
 
-# execute test cases against a specific Python version
+# execute tests against a specific Python version
 test-py version *args:
     uv run --python {{ version }} pytest --cov ulid_django {{ args }}
 
-# execute test cases against a specific Django feature release
+# execute tests against a specific Django feature release
 test-django version *args:
     uv run --frozen --with 'django=={{ version }}.*' pytest --cov ulid_django {{ args }}
 
-# execute test cases against every supported Python and Django version
+# execute tests against every supported Python and Django version
 test-all *args: (test-py "3.12" args) (test-py "3.13" args) (test-py "3.14" args) (test-django "5.2" args) (test-django "6.0" args)
 
 # build the source distribution and wheel
