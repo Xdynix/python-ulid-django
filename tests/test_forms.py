@@ -28,8 +28,8 @@ class TestULIDField:
         ("value", "expected"),
         [
             (None, None),
-            (ULID_STR, ULID_STR),
-            (ULID_VALUE, ULID_STR),
+            pytest.param(ULID_STR, ULID_STR, id="str"),
+            pytest.param(ULID_VALUE, ULID_STR, id="ulid"),
         ],
     )
     def test_prepare_value(
@@ -44,11 +44,11 @@ class TestULIDField:
         ("value", "expected"),
         [
             (None, None),
-            ("", None),
-            (ULID_VALUE, ULID_VALUE),
-            (ULID_STR, ULID_VALUE),
-            (ULID_HEX, ULID_VALUE),
-            (str(ULID_UUID), ULID_VALUE),
+            pytest.param("", None, id="empty"),
+            pytest.param(ULID_VALUE, ULID_VALUE, id="ulid"),
+            pytest.param(ULID_STR, ULID_VALUE, id="str"),
+            pytest.param(ULID_HEX, ULID_VALUE, id="hex"),
+            pytest.param(str(ULID_UUID), ULID_VALUE, id="uuid_str"),
         ],
     )
     def test_to_python(
@@ -69,7 +69,13 @@ class TestULIDField:
 
 @pytest.mark.django_db
 class TestIntegration:
-    @pytest.mark.parametrize("value", [ULID_STR, ULID_HEX])
+    @pytest.mark.parametrize(
+        "value",
+        [
+            pytest.param(ULID_STR, id="str"),
+            pytest.param(ULID_HEX, id="hex"),
+        ],
+    )
     def test_form_get_set(self, admin_client: Client, item: Item, value: str) -> None:
         Item.objects.filter(pk=item.pk).update(etag=None)
 
