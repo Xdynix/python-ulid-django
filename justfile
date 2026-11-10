@@ -11,6 +11,7 @@ default: ruff
 
 # set up development environment
 dev-setup:
+    uv python upgrade
     uv sync
     uv run pre-commit install
 
@@ -40,7 +41,7 @@ test-django version *args:
     uv run --frozen --with 'django=={{ version }}.*' pytest --cov ulid_django {{ args }}
 
 # execute tests against every supported Python and Django version
-test-all *args: (test-py "3.12" args) (test-py "3.13" args) (test-py "3.14" args) (test-django "5.2" args) (test-django "6.0" args)
+test-all *args: (test-py "3.12" args) (test-py "3.13" args) (test-py "3.14" args) (test-py "3.15" args) (test-django "5.2" args) (test-django "6.0" args)
 
 # build the source distribution and wheel
 build:

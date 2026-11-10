@@ -28,6 +28,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
@@ -40,7 +41,7 @@ Issues = "https://github.com/Xdynix/python-ulid-django/issues"
 
 [build-system]
 # Floor is also the required-version floor under [tool.uv]; raise both together.
-requires = ["uv_build>=0.13.5,<0.14"]
+requires = ["uv_build>=0.13.6,<0.14"]
 build-backend = "uv_build"
 
 [dependency-groups]
@@ -49,9 +50,9 @@ dev = [
 ]
 lint = [
     "django-stubs[compatible-mypy]~=6.1.0",
-    "mypy>=2.3,<3",
+    "mypy>=2.4,<3",
     "pre-commit>=4.6.1",
-    "ruff>=0.16.1",
+    "ruff>=0.17.0",
 ]
 test = [
     "beautifulsoup4[lxml]>=4.15.0",
@@ -65,13 +66,19 @@ test = [
 
 [tool.uv]
 # Floor matches the uv_build floor under [build-system]; raise both together.
-required-version = ">=0.13.5"
+required-version = ">=0.13.6"
 default-groups = "all"
 preview-features = ["audit-command"]
 
 [tool.uv.build-backend]
 # The distribution name normalizes to `python_ulid_django`, not the module name.
 module-name = "ulid_django"
+
+# TODO: Drop once PyYAML ships cp315 wheels (yaml/pyyaml#981). On Windows without
+# MSVC its sdist fails instead of falling back to pure Python (setup.py misses
+# setuptools' PlatformError); skipping the extension needs no compiler.
+[tool.uv.extra-build-variables]
+pyyaml = { PYYAML_FORCE_LIBYAML = "0" }
 
 [tool.ruff]
 cache-dir = ".cache/ruff"
